@@ -4,6 +4,22 @@
 **Цель проекта** — разработка модели распознавания лиц, устойчивой к дипфейкам, путем добавления их в обучающую выборку.  
 **Задача** - обучить энкодер для распознавания лиц
 
+## Начало работы:
+### Окружение
+Версия Python: `Python 3.10.12`.
+  
+Создание окружения:
+
+```bash
+VENV_DIR="VENV_PATH"
+python3 -m virtualenv $VENV_DIR
+source $VENV_DIR/bin/activate
+
+pip install -r requirements.txt
+```
+
+
+
 ## Данные
 
 Перед началом работы необходимо загрузить данные и разместить их в папке `data`. 
@@ -60,6 +76,8 @@ meta.json имеет структуру face_index/i.jpg : is_deepfake. Ключ
 
 ## Модель  
 Мы протестировали различные модели, и наилучшие результаты показал **ViT-B/16 DINO** — визуальный трансформер с размером батча 16.  
+**Скачать чекпойнт обученной модели, вы можете так:** `gdown --fuzzy "https://drive.google.com/file/d/1tWmIGZMIgNVzSmYzJvqdaZg9nP7iYUr9/view?usp=sharing" -O checkpoints/best_model.pth`
+
 
 ## Эксперименты  
 Подробности о проведенных экспериментах доступны в файле [`experiments.md`](experiments.md).
@@ -90,13 +108,12 @@ meta.json имеет структуру face_index/i.jpg : is_deepfake. Ключ
 - `--miner`: Тип минера для триплетной потери. Возможные значения: `hard`, `all`, `None` (по умолчанию `None`).
 
 ### Инференс
+`python make_submission.py checkpoints/bst_vitb16_hard_miner.pth`
 
 **Скорость инференса 210 - 230 кадров в секунду на V100**
 - Разрешение входного изображения: 224х224
 -Количество каналов: 3
 -  Размер батча: 64
-
-`python make_submission.py checkpoints/bst_vitb16_hard_miner.pth`
 
 
 
